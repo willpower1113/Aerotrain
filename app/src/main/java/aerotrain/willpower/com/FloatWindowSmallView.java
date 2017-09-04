@@ -9,6 +9,7 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -43,7 +44,7 @@ public class FloatWindowSmallView extends FrameLayout {
     /**
      * 小悬浮窗的参数
      */
-    private WindowManager.LayoutParams mParams;
+    public WindowManager.LayoutParams mParams;
 
     /**
      * 记录当前手指位置在屏幕上的横坐标值
@@ -77,14 +78,17 @@ public class FloatWindowSmallView extends FrameLayout {
 
     private boolean click;
 
-    private float scale;
-
+    /**
+     * 屏幕宽
+     */
+    private int screenWidth;
     public FloatWindowSmallView(Context context) {
         super(context);
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 //        LayoutInflater.from(context).inflate(R.layout.float_window_small,this);
 //        View view = findViewById(R.id.small_window_layout);
         setBackgroundColor(Color.TRANSPARENT);
+        screenWidth = getScreenWidth(context);
         setClick(false);
         viewWidth = 80;
         viewHeight = 80;
@@ -133,6 +137,7 @@ public class FloatWindowSmallView extends FrameLayout {
                 yInScreen = event.getRawY() - getStatusBarHeight();
                 break;
             case MotionEvent.ACTION_MOVE:
+                xDownInScreen = event.getRawX();
                 xInScreen = event.getRawX();
                 yInScreen = event.getRawY() - getStatusBarHeight();
                 // 手指移动的时候更新小悬浮窗的位置
@@ -144,7 +149,11 @@ public class FloatWindowSmallView extends FrameLayout {
                 if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
                     openBigWindow();
                 } else {//吸附到两边
-                    xInScreen = 0;
+                    if (xDownInScreen > (screenWidth / 2)) {
+                        xInScreen = screenWidth;
+                    } else {
+                        xInScreen = 0;
+                    }
                     updateViewPosition();
                 }
                 break;
@@ -203,15 +212,18 @@ public class FloatWindowSmallView extends FrameLayout {
 
     private void setClick(boolean click) {
         this.click = click;
-        if (click) {
-            setScale(1f);
-        } else {
-            setScale(0.8f);
-        }
-    }
-
-    private void setScale(float scale) {
-        this.scale = scale;
         postInvalidate();
     }
+
+    /**
+     * 获取屏幕的宽
+     *
+     * @param context
+     * @return
+     */
+    private int getScreenWidth(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        return windowManager.getDefaultDisplay().getWidth();
+    }
+
 }

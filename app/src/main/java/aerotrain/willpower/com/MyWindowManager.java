@@ -3,15 +3,8 @@ package aerotrain.willpower.com;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.PixelFormat;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.WindowManager;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/9/2.
@@ -128,15 +121,6 @@ public class MyWindowManager {
         }
     }
 
-    /**
-     * 更新小悬浮窗的TextView上的数据，显示内存使用的百分比。
-     *
-     * @param context 可传入应用程序上下文。
-     */
-    public static void updateUsedPercent(Context context) {
-        if (smallWindow != null) {
-        }
-    }
 
     /**
      * 是否有悬浮窗(包括小悬浮窗和大悬浮窗)显示在屏幕上。
@@ -173,12 +157,14 @@ public class MyWindowManager {
         return mActivityManager;
     }
 
-    /**
+
+
+    /*
      * 计算已使用内存的百分比，并返回。
      *
      * @param context 可传入应用程序上下文。
      * @return 已使用内存的百分比，以字符串形式返回。
-     */
+
     public static String getUsedPercentValue(Context context) {
         String dir = "/proc/meminfo";
         try {
@@ -196,17 +182,28 @@ public class MyWindowManager {
         }
         return "悬浮窗";
     }
-
-    /**
+ */
+    /*
      * 获取当前可用内存，返回数据以字节为单位。
      *
      * @param context 可传入应用程序上下文。
      * @return 当前可用内存。
-     */
+
     private static long getAvailableMemory(Context context) {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         getActivityManager(context).getMemoryInfo(mi);
         return mi.availMem;
     }
+  */
 
+
+    /*
+     * 更新小悬浮窗的TextView上的数据，显示内存使用的百分比。
+     *
+     * @param context 可传入应用程序上下文。
+
+    public static void updateUsedPercent(Context context) {
+        if (smallWindow != null) {
+        }
+    }*/
 }
