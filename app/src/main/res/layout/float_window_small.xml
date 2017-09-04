@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/small_window_layout"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:background="@drawable/selector_menu_item">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp"
+        app:srcCompat="@drawable/ic_small_bg"/>
+</LinearLayout>
